@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KFC | Kagechan Football Club</title>
+
+<style>
+:root {
+  --bg: #ffffff;
+  --fg: #000000;
+  --accent: #ff4b4b;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  background: linear-gradient(
+    135deg,
+    rgba(233,213,213,0.85),
+    rgba(241,55,55,0.78)
+  );
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(122,64,64,0.04);
+  pointer-events: none;
+  z-index: -1;
+}
+
+header a {
+  color: #000;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+/* ===== HERO ===== */
+.hero {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 暗めのオーバーレイ */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.25));
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ここが手動スライドの本体 */
+.hero-track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transform: translateX(0);
+  transition: transform 0.55s ease;
+  z-index: 1;
+  touch-action: pan-y; /* 縦スクロールを邪魔しない */
+  cursor: grab;
+}
+
+.hero-track.dragging {
+  transition: none; /* ドラッグ中はアニメ無し */
+  cursor: grabbing;
+}
+
+.hero-slide {
+  min-width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+/* タイトル */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 0 16px;
+}
+
+.hero h1 {
+  font-size: 56px;
+  letter-spacing: 2px;
+  -webkit-text-stroke: 2px var(--accent);
+  margin: 0 0 12px;
+}
+
+.hero p {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* ドット（任意だけど便利） */
+.hero-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  gap: 10px;
+}
+
+.hero-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+}
+
+.hero-dot.active {
+  background: rgba(255,255,255,0.9);
+}
+
+/* ===== NEWS ===== */
+section {
+  padding: 120px 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.bg-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 80px 40px;
+}
+
+ /* ===== PHOTO SECTION ===== */
+    .about-photo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-photo img {
+      width: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      .about-photo {
+        grid-template-columns: 1fr;
+      }
+    }
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.footer-insta {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.footer-insta:hover {
+  transform: scale(1.15);
+  transition: transform 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+  header a { font-size: 12px; }
+  .hero h1 { font-size: 36px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html">HOME</a>
+  <a href="about.html">ABOUT</a>
+  <a href="school.html">SCHOOL</a>
+  <a href="coach.html">COACH</a>
+  <a href="faq.html">FAQ</a>
+  <a href="goal.html">GOAL</a>
+  <a href="contact.html">CONTACT</a>
+</header>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-track" id="heroTrack">
+    <div class="hero-slide" style="background-image:url('./images/011.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('./images/pic02.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('./images/pic3.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('./images/pic.4.jpg')"></div>
+  </div>
+
+  <div class="hero-content">
+    <h1>KFC｜Kagechan Football Club</h1>
+    <p>サッカーも、勉強も、成功体験を積み上げる</p>
+  </div>
+
+  <div class="hero-dots" id="heroDots"></div>
+</div>
+
+<!-- NEWS -->
+<section class="bg-section">
+  <h2>NEWS</h2>
+  <div class="about-photo">
+     <img src="./images/picpic1.jpeg" alt="">
+      <p>
+          2025年11月11日<br>
+          LINE登録者数100名突破。練習動画の撮影を開始しました。
+     </p>
+  </div>
+
+</section>
+
+<footer class="site-footer">
+  <a
+    href="https://www.instagram.com/kfc__2024/"
+    target="_blank"
+    class="footer-insta"
+    aria-label="Instagram"
+  >
+    <svg width="60" height="60" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="instaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#feda75"/>
+          <stop offset="25%" stop-color="#fa7e1e"/>
+          <stop offset="50%" stop-color="#d62976"/>
+          <stop offset="75%" stop-color="#962fbf"/>
+          <stop offset="100%" stop-color="#4f5bd5"/>
+        </linearGradient>
+      </defs>
+      <rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="url(#instaGradient)" stroke-width="2"/>
+      <circle cx="12" cy="12" r="5" fill="none" stroke="url(#instaGradient)" stroke-width="2"/>
+      <circle cx="17" cy="7" r="1.2" fill="url(#instaGradient)"/>
+    </svg>
+  </a>
+  <p>© Kagechan Football Club</p>
+</footer>
+
+<script>
+(() => {
+  const hero = document.getElementById("hero");
+  const track = document.getElementById("heroTrack");
+  const slides = Array.from(track.querySelectorAll(".hero-slide"));
+  const dotsWrap = document.getElementById("heroDots");
+
+  const slideCount = slides.length;
+  let index = 0;
+
+  // ===== dots =====
+  const dots = slides.map((_, i) => {
+    const b = document.createElement("button");
+    b.className = "hero-dot" + (i === 0 ? " active" : "");
+    b.type = "button";
+    b.addEventListener("click", () => {
+      goTo(i, true);
+    });
+    dotsWrap.appendChild(b);
+    return b;
+  });
+
+  function updateDots() {
+    dots.forEach((d, i) => d.classList.toggle("active", i === index));
+  }
+
+  function goTo(nextIndex, fromUser = false) {
+    index = (nextIndex + slideCount) % slideCount;
+    track.style.transform = `translateX(${-index * 100}%)`;
+    updateDots();
+    if (fromUser) pauseAutoThenResume();
+  }
+
+  // ===== auto slide =====
+  let autoTimer = null;
+  let resumeTimer = null;
+  const AUTO_MS = 4000;
+  const RESUME_AFTER_MS = 5000;
+
+  function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(() => goTo(index + 1, false), AUTO_MS);
+  }
+
+  function stopAuto() {
+    if (autoTimer) clearInterval(autoTimer);
+    autoTimer = null;
+  }
+
+  function pauseAutoThenResume() {
+    stopAuto();
+    if (resumeTimer) clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(() => startAuto(), RESUME_AFTER_MS);
+  }
+
+  // ===== drag / swipe =====
+  let isDown = false;
+  let startX = 0;
+  let currentX = 0;
+  let startTranslate = 0;
+
+  function getTranslateX() {
+    const m = track.style.transform.match(/-?\d+(\.\d+)?/);
+    // transform が未設定時は 0
+    return m ? parseFloat(m[0]) : 0;
+  }
+
+  function onDown(clientX) {
+    isDown = true;
+    track.classList.add("dragging");
+    startX = clientX;
+    currentX = clientX;
+    // 現在位置（%）を px に変換するため、いったん index から計算
+    startTranslate = -index * hero.clientWidth;
+    pauseAutoThenResume();
+  }
+
+  function onMove(clientX) {
+    if (!isDown) return;
+    currentX = clientX;
+    const delta = currentX - startX;
+    const translatePx = startTranslate + delta;
+    track.style.transform = `translateX(${translatePx}px)`;
+  }
+
+  function onUp() {
+    if (!isDown) return;
+    isDown = false;
+    track.classList.remove("dragging");
+
+    const delta = currentX - startX;
+    const threshold = hero.clientWidth * 0.18; // 18% 動いたらスライド
+    if (delta > threshold) {
+      goTo(index - 1, true);
+    } else if (delta < -threshold) {
+      goTo(index + 1, true);
+    } else {
+      goTo(index, false); // 元に戻す
+    }
+  }
+
+  // mouse
+  hero.addEventListener("mousedown", (e) => onDown(e.clientX));
+  window.addEventListener("mousemove", (e) => onMove(e.clientX));
+  window.addEventListener("mouseup", onUp);
+
+  // touch
+  hero.addEventListener("touchstart", (e) => onDown(e.touches[0].clientX), { passive: true });
+  hero.addEventListener("touchmove", (e) => onMove(e.touches[0].clientX), { passive: true });
+  hero.addEventListener("touchend", onUp);
+
+  // init
+  goTo(0, false);
+  startAuto();
+})();
+</script>
+
+</body>
+</html>
